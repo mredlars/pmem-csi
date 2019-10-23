@@ -182,8 +182,6 @@ spec:
           privileged: true
         terminationMessagePath: /tmp/termination-log
         volumeMounts:
-        - mountPath: /certs/
-          name: registry-cert
         - mountPath: /csi
           name: plugin-socket-dir
       - args:
@@ -202,14 +200,6 @@ spec:
       volumes:
       - emptyDir: null
         name: plugin-socket-dir
-      - name: registry-cert
-        secret:
-          items:
-          - key: tls.crt
-            path: pmem-csi-registry.crt
-          - key: tls.key
-            path: pmem-csi-registry.key
-          secretName: pmem-csi-registry-secrets
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -263,8 +253,6 @@ spec:
         - mountPath: /var/lib/kubelet/pods
           mountPropagation: Bidirectional
           name: pods-dir
-        - mountPath: /certs/
-          name: registry-cert
         - mountPath: /dev
           name: dev-dir
         - mountPath: /var/lib/pmem-csi.intel.com
@@ -327,9 +315,6 @@ spec:
           path: /var/lib/kubelet/pods
           type: DirectoryOrCreate
         name: pods-dir
-      - name: registry-cert
-        secret:
-          secretName: pmem-csi-node-secrets
       - hostPath:
           path: /var/lib/pmem-csi.intel.com
           type: DirectoryOrCreate
