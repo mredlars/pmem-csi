@@ -335,18 +335,3 @@ metadata:
 spec:
   attachRequired: false
   podInfoOnMount: true
----
-apiVersion: config.openshift.io/v1
-kind: FeatureGate
-metadata:
-  annotations:
-    release.openshift.io/create-only: "true"
-  name: cluster
-spec:
-  customNoUpgrade:
-    enabled:
-    - CSINodeInfo
-    - CSIPersistentVolume
-    - CSIDriverRegistry
-    - CSIBlockVolume
-  featureSet: CustomNoUpgrade
